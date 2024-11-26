@@ -8,15 +8,16 @@ class TabsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiManager.loadTabsList(), builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return errorView(snapshot.error.toString());
-      } else if (snapshot.hasData) {
-        return tabsList(snapshot.data!.sources ?? []);
-      } else {
-        return loadingView();
-      }
-    });
+        future: ApiManager.loadTabsList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return errorView(snapshot.error.toString());
+          } else if (snapshot.hasData) {
+            return tabsList(snapshot.data!.sources ?? []);
+          } else {
+            return loadingView();
+          }
+        });
   }
 }
 

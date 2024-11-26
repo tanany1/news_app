@@ -25,6 +25,7 @@ class SourcesResponse {
   }
 
   String? get status => _status;
+
   List<Source>? get sources => _sources;
 
   Map<String, dynamic> toJson() {
@@ -35,7 +36,6 @@ class SourcesResponse {
   }
 }
 
-
 /// id : "abc-news"
 /// name : "ABC News"
 /// description : "Your trusted source for breaking news, analysis, exclusive interviews, headlines, and videos at ABCNews.com."
@@ -43,4 +43,3 @@ class SourcesResponse {
 /// category : "general"
 /// language : "en"
 /// country : "us"
-

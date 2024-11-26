@@ -7,15 +7,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        HomeScreen.routeName : (_) => const HomeScreen(),
+        HomeScreen.routeName: (_) => const HomeScreen(),
       },
       initialRoute: HomeScreen.routeName,
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
