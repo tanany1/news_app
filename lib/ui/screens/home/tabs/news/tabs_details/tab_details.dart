@@ -1,27 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/api_manager.dart';
 import 'package:news_app/model/article.dart';
+import 'package:news_app/ui/screens/home/tabs/news/tabs_details/tab_details_view_model.dart';
 import 'package:news_app/ui/widgets/app_error.dart';
 import 'package:news_app/ui/widgets/app_loader.dart';
+import 'package:provider/provider.dart';
 
-class TabDetails extends StatelessWidget {
+class TabDetails extends StatefulWidget {
   final String sourceId;
 
   const TabDetails({super.key, required this.sourceId});
 
   @override
+  State<TabDetails> createState() => _TabDetailsState();
+}
+
+class _TabDetailsState extends State<TabDetails> {
+  TabDetailsViewModel viewModel = TabDetailsViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.loadArticles(widget.sourceId);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: ApiManager.loadArticlesList(sourceId),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return AppError(error: snapshot.error.toString());
-          } else if (snapshot.hasData) {
-            return articlesList(snapshot.data!.articles!);
-          } else {
-            return const AppLoader();
-          }
-        });
+    return ChangeNotifierProvider(
+      create: (_) => viewModel,
+      child: Builder(builder: (context) {
+        viewModel = Provider.of(context);
+        if (viewModel.state == TabsDetailsState.error) {
+          return AppError(error: viewModel.errorMessage , onRefreshClick: (){
+            viewModel.loadArticles(widget.sourceId);
+          },);
+        } else if (viewModel.state == TabsDetailsState.success) {
+          return articlesList(viewModel.articles);
+        } else {
+          return const AppLoader();
+        }
+      }),
+    );
   }
 
   Widget articlesList(List<Article?> articles) {
@@ -36,7 +56,9 @@ class TabDetails extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20) , border: Border.all(width: 2)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(width: 2)),
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [

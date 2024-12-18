@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/ui/screens/home/tabs/categories/categories_tab.dart';
-import 'package:news_app/ui/screens/home/tabs/news/tabs_list.dart';
+import 'package:news_app/ui/screens/home/tabs/news/tabs_list/tabs_list.dart';
 import 'package:news_app/ui/screens/home/tabs/settings/settings_tab.dart';
 import '../../../../model/category.dart';
 
